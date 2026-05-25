@@ -69,7 +69,7 @@ const StatsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm
+              className="rounded-2xl border border-card bg-card backdrop-blur-sm
               p-8 text-center hover:border-brand-purple/40 transition-all duration-300"
             >
               <Counter

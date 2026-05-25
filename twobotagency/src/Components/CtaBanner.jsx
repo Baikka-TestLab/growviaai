@@ -13,7 +13,7 @@ const CTABanner = () => {
 
   return (
     <section className="py-20 px-4 md:px-8 relative overflow-hidden">
-      <div className="absolute inset-0 gradient-bg opacity-90" />
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-navy via-brand-navy-light to-brand-navy" />
       <div className="absolute inset-0 dot-grid opacity-10" />
 
       <div className="relative z-10 max-w-3xl mx-auto text-center">
@@ -42,7 +42,7 @@ const CTABanner = () => {
         >
           <Link
             to="/contact"
-            className="inline-block bg-foreground text-brand-navy px-8 py-3.5 rounded-full font-display font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            className="inline-block bg-foreground text-brand-navy px-8 py-3.5 rounded-full font-display font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
           >
             {buttonText}
           </Link>

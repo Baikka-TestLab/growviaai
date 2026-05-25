@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
 import { motion } from "motion/react";
+import { useContent } from "../context/ContentContext";
 import { getIcon } from "../utils/iconMap";
-import { getHowItWorksData } from "../services/howItWorksService";
 
 const DEFAULT_STEPS = [
   {
@@ -22,19 +21,8 @@ const DEFAULT_STEPS = [
 ];
 
 const HowItWorksSection = () => {
-  const [steps, setSteps] = useState(DEFAULT_STEPS);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getHowItWorksData();
-        setSteps(data);
-      } catch {
-        // keep defaults
-      }
-    };
-    fetchData();
-  }, []);
+  const content = useContent();
+  const steps = content?.howItWorks ?? DEFAULT_STEPS;
 
   return (
     <section
@@ -75,11 +63,11 @@ const HowItWorksSection = () => {
                 transition={{ delay: i * 0.2 }}
                 className="group relative"
               >
-                <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:border-brand-purple/40 hover:shadow-xl hover:shadow-brand-purple/10">
+                <div className="bg-card backdrop-blur-lg border border-card rounded-2xl p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:border-brand-purple/40 hover:shadow-xl hover:shadow-brand-purple/10">
 
                   <div className="relative mb-6 flex justify-center">
                     <div className="absolute w-20 h-20 rounded-full bg-brand-purple/20 blur-xl group-hover:scale-125 transition" />
-                    <div className="w-16 h-16 rounded-full gradient-bg flex items-center justify-center relative z-10 shadow-lg">
+                    <div className="w-16 h-16 rounded-full bg-brand-navy-light flex items-center justify-center relative z-10 shadow-lg">
                       <Icon size={28} className="text-foreground" />
                     </div>
                   </div>

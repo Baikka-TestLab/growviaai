@@ -83,12 +83,12 @@ const HeroSection = () => {
           {" "}
           <button
             onClick={() => scrollToSection("how-it-works")}
-            className="btn-gradient w-full sm:w-auto px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold flex items-center justify-center gap-2"
+            className="btn-gradient w-full sm:w-auto px-6 sm:px-8 py-3 text-sm sm:text-base font-semibold flex items-center justify-center gap-2 cursor-pointer"
           >
             {" "}
             {ctaPrimary} <ArrowRight size={18} />{" "}
           </button>{" "}
-          <button className="btn-ghost w-full sm:w-auto px-6 sm:px-8 py-3 text-sm sm:text-base flex items-center justify-center gap-2">
+          <button className="btn-ghost w-full sm:w-auto px-6 sm:px-8 py-3 text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer">
             {" "}
             <Play size={18} /> {ctaSecondary}{" "}
           </button>{" "}

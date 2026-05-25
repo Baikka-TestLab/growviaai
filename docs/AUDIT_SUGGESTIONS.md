@@ -1,27 +1,51 @@
 # Audit — Suggestions
 
-| # | Area | Description |
-|---|------|-------------|
-| S1 | Critical | **Define Tailwind v4 theme.** Add `@theme` block in `index.css` with custom colors (`brand-navy`, `brand-purple`, `brand-muted`, `brand-magenta`, `brand-navy-light`), font families (`font-display`, `font-body`), and `@utility` definitions for `gradient-text`, `btn-gradient`, `card-dark`, `dot-grid`, `hero-arc`, `hero-arc-line`, `section-padding`, `input`, `btn-ghost`, `gradient-bg`. Without these, all custom styling is missing. |
-| S2 | Consistency | **Convert 5 remaining context-dependent components** to the individual service pattern: `Faq.jsx`, `StatSection.jsx`, `Testimonial.jsx`, `SocialProof.jsx`, `CtaBanner.jsx`. They still use `useContent()` but the context only fetches `/api/hero`, so they always fall back to hardcoded defaults (no actual API-driven content). |
-| S3 | Cleanup | **Remove orphaned `contentData.js`.** ESM export in a CJS project, never imported anywhere. |
-| S4 | Cleanup | **Remove unused `import React`** in `Home.jsx:1` and `Final.jsx:1`. React 19 + Vite's automatic JSX transform makes it unnecessary. |
-| S5 | Cleanup | **Remove unused dependencies** from `twobotagency/package.json`: `react-hook-form`, `lottie-react`, `react-fast-marquee`. `@emailjs/browser` is also not imported anywhere. |
-| S6 | ESLint | **Fix 11 false-positive `motion` "unused" errors.** Every component importing `{ motion }` triggers `no-unused-vars` because ESLint's base rule doesn't track JSX member expressions (`motion.div`). Options: switch to `typescript-eslint/no-unused-vars` or add `motion` to a globals allowlist. |
-| S7 | Security | **Add `.env` to `twobotagency/.gitignore`.** Currently only `*.local` is ignored, so `.env` would be tracked. |
-| S8 | DX | **Add `.env.example` files** for both `backend/` and `twobotagency/` so new devs know which env vars to set. |
-| S9 | Resilience | **Add a React error boundary** at the app root level in `main.jsx` so a component crash doesn't white-screen the entire app. |
-| S10 | Style | **Standardize `require()` placement in `app.js`.** Currently `testRoutes` is required at the top (line 4) but all other routes are required inline right before `app.use()`. Pick one style and apply it consistently. |
-| S11 | UX | **Add a loading skeleton for Navbar** instead of returning `null` (Navbar.jsx:85-87). Currently the entire navbar disappears until the API responds, causing a layout flash. |
-| S12 | Visual | **Restore gradient-text highlight on About heading.** The original had `<span className="gradient-text">TwoBot Agency</span>` inside the h1. The new API-driven version renders the whole string as plain `{heading}`, losing the gradient effect. |
-| S13 | Validation | **Add server-side validation + rate limiting** on the contact POST endpoint (once B1 is fixed). Currently no request body validation exists. |
-| S14 | Docs | **Update `AGENTS.md` API routes section.** Currently only lists `test, navbar, hero` — missing `services, how-it-works, industries, pricing, about, contact, footer`. |
-| S15 | Cleanup | **Remove empty `App.css`.** File exists at `twobotagency/src/App.css` with zero content and is never imported. |
-| S16 | Config | **Review DaisyUI usage.** `@plugin "daisyui"` is loaded in `index.css:2` but no components use DaisyUI classes (`btn`, `card`, `input`, `select`). All components use custom classes. Either add DaisyUI theme config or remove the plugin. |
-| S17 | UX | **Make Footer legal links interactive.** Privacy Policy and Terms of Service (Footer.jsx:104-106) render as `<span>` elements — visually styled like links but not clickable. Should be `<button>` or `<a>` if they have destinations. |
-| S18 | Consistency | **Consolidate axios usage.** All 8 service files each import `axios` directly and manually construct the base URL. A shared Axios instance already exists at `src/api/api.js` (with `baseURL` from env) but is only used by `ContentContext.jsx`. Either remove `api.js` or make all services use it. |
-| S19 | Accessibility | **Add `aria-label` to Navbar mobile menu toggle** (Navbar.jsx:132-136). The button only contains `<Menu>` / `<X>` icons with no visible text — screen readers can't identify its purpose. |
-| S20 | Cleanup | **Remove unused assets** from `public/` (`favicon.svg`, `icons.svg`) if they're not referenced. The actual favicon is `growviaia-icon-256px.png`. Also review `src/assets/` (`vite.svg`, `react.svg`) — likely unused Vite boilerplate. |
-| S21 | Fix | **Fix favicon path** in `index.html:5`. Change `href="/public//growviaia-icon-256px.png"` → `href="/growviaia-icon-256px.png"` (Vite serves `public/` at root; also remove double slash). |
-| S22 | Cleanup | **Review `src/assets/`.** `image 1.avif` has a space in its filename — could cause issues on some systems or build tools. Rename to `image-1.avif` if used. |
-| S23 | Consistency | **Add "How It Works" to Footer company links.** Footer (`Footer.jsx:13`) lists `Services, Industries, Pricing, About, Contact` but omits `How It Works` that appears in the Navbar (`navbarData.js:8`). |
+| # | Area | Status | Description |
+|---|------|--------|-------------|
+| S1 | Critical | ✅ **Done** | **Define Tailwind v4 theme.** Added `@theme` block with custom colors, fonts, and `@layer utilities`. All custom styling now renders. |
+| S2 | Consistency | ❌ **Open** | **Convert 5 context-dependent components** to individual service pattern: `Faq.jsx`, `StatSection.jsx`, `Testimonial.jsx`, `SocialProof.jsx`, `CtaBanner.jsx`. Currently always fall back to hardcoded defaults since context only fetches `/api/hero`. |
+| S3 | Cleanup | ❌ **Open** | **Remove orphaned `contentData.js`.** ESM export in CJS project, never imported. |
+| S4 | Cleanup | ❌ **Open** | **Remove unused `import React`** in `Home.jsx:1` and `Final.jsx:1`. |
+| S5 | Cleanup | ❌ **Open** | **Remove unused deps:** `react-hook-form`, `lottie-react`, `react-fast-marquee`, `@emailjs/browser`, `mongoose` (backend), `react-router` (redundant with `react-router-dom`). |
+| S6 | ESLint | ❌ **Open** | **Fix 11 false-positive `motion` "unused" errors.** `motion.div` not tracked by base `no-unused-vars`. |
+| S7 | Security | ✅ **Done** | **Add `.env` to `.gitignore`.** Line added after `*.local`. |
+| S8 | DX | ❌ **Open** | **Add `.env.example` files** for `backend/` and `twobotagency/`. |
+| S9 | Resilience | ❌ **Open** | **Add React error boundary** at app root. |
+| S10 | Style | ✅ **Done** | **Standardize `require()` placement** in `backend/src/app.js`. All route requires moved to top. |
+| S11 | UX | ✅ **Done** | **Loading skeleton for Navbar** already existed on line 87-101 (pulse animation, not null). Already fixed. |
+| S12 | Visual | ✅ **Done** | **Gradient-text on About heading** already present at line 42 (`<span className="gradient-text">TwoBot Agency</span>`). Already done. |
+| S13 | Validation | ❌ **Open** | **Add validation + rate limiting** on n8n webhook. |
+| S14 | Docs | ✅ **Done** | **Update `AGENTS.md`.** Now includes full API route list, theme system, monochrome scheme, and gotchas. |
+| S15 | Cleanup | ❌ **Open** | **Remove dead `App.jsx` + `App.css`.** Both files are never imported or used. |
+| S16 | Config | ❌ **Open** | **Review DaisyUI usage.** Plugin loaded but no DaisyUI classes used in components. |
+| S17 | UX | ✅ **Done** | **Make Footer legal links interactive.** Privacy Policy and Terms of Service changed from `<span>` to `<button>`. |
+| S18 | Consistency | ❌ **Open** | **Consolidate axios usage.** Shared instance at `src/api/api.js` only used by `ContentContext.jsx` — 8 service files import axios directly. |
+| S19 | Accessibility | ✅ **Done** | **Add `aria-label` to Navbar mobile menu toggle.** `aria-label` dynamically says "Open menu" / "Close menu". |
+| S20 | Cleanup | ❌ **Open** | **Remove unused assets:** `public/icons.svg`, `src/assets/hero.png`, `src/assets/image-1.avif`, `src/assets/react.svg`, `src/assets/vite.svg`. |
+| S21 | Fix | ✅ **Done** | **Fix favicon path** in `index.html:5`. Removed double slash and `/public/` prefix. |
+| S22 | Cleanup | ✅ **Done** | **Rename `image 1.avif`** to `image-1.avif`. Space removed from filename. |
+| S23 | Consistency | ❌ **Open** | **Add "How It Works" to Footer company links.** Listed in Navbar but missing from Footer. |
+| S24 | Feature | ✅ **Done** | **Add dark/light theme toggle.** `ThemeContext` + `data-theme` attribute + CSS variable overrides. Toggle button in Navbar. |
+| S25 | UX | ✅ **Done** | **Add `cursor-pointer` to all interactive elements.** Applied across 7 component files. |
+| S26 | UX | ✅ **Done** | **Logo click scrolls to top.** Mobile menu closes; scrolls to top when already on `/`. |
+| S27 | Visual | ✅ **Done** | **Fix light mode card visibility.** Replaced all `bg-white/5 border-white/10` patterns with `bg-card border-card` (HowItWorks, Pricing, Stats, FAQ). |
+| S28 | Visual | ✅ **Done** | **Fix light mode text visibility.** Changed hardcoded `text-white`/`text-brand-navy`/`group-hover:text-white` to `text-foreground`/`text-gray-900`/`group-hover:text-foreground`. |
+| S29 | Docs | ✅ **Done** | **Create `docs/EDIT_LOG.md`** with complete session edit history. |
+| S30 | Docs | ✅ **Done** | **Move `README.md` and `design-tokens.md` into `docs/`.** All documentation consolidated in `docs/` folder. |
+| S31 | Accessibility | ❌ **Open** | **Add proper `<label>` elements** to form inputs in `contact.jsx`. Replace `placeholder`-only labeling with `<label>` + `htmlFor` or `aria-label`. |
+| S32 | Accessibility | ❌ **Open** | **Replace `alert()` with inline validation** in `contact.jsx:48`. Show field-level errors with `aria-describedby` or `aria-invalid`. |
+| S33 | Security | ❌ **Open** | **Restrict CORS origins** in `backend/app.js:19`. Use `cors({ origin: 'https://example.com' })` for production. |
+| S34 | Consistency | ❌ **Open** | **Rename `contact.jsx` → `Contact.jsx`** for PascalCase consistency with all other components. |
+| S35 | Style | ❌ **Open** | **Make Error.jsx "Back to Home" button theme-aware.** Replace hardcoded `from-white to-gray-400` gradient with theme tokens. |
+| S36 | Config | ❌ **Open** | **Fix `text-foreground/80` opacity modifier** in `CtaBanner.jsx:33`. Tailwind v4 opacity modifiers on custom CSS variables may not work — use explicit opacity class instead. |
+| S37 | Config | ❌ **Open** | **Add root-level `.gitignore`** to keep `backend/` and `docs/` untracked (currently relies on no `.gitignore` existing). |
+| S38 | Cleanup | ❌ **Open** | **Remove unused Mongoose dependency** from `backend/package.json`. DB connection is commented out. |
+| S39 | Cleanup | ❌ **Open** | **Remove unnecessary `import React`** in `Final.jsx:1` and `Home.jsx:1`. Unneeded with React 19 + Vite automatic JSX runtime. |
+| S40 | Consistency | ❌ **Open** | **Standardize `Outlet` import source.** `Final.jsx:5` imports from `"react-router"` — use `"react-router-dom"` like all other files. |
+| S41 | Cleanup | ❌ **Open** | **Remove unused service files:** `aboutService.js`, `contactService.js`, `footerService.js`, `howItWorksService.js`, `industriesService.js`, `pricingService.js`, `servicesService.js`. Only `navbarService.js` and `heroService.js` are used. |
+| S42 | Style | ❌ **Open** | **Fix hardcoded `text-amber-500`** in `Hero.jsx:65`. Amber color overrides `text-foreground` and ignores theme — may have low contrast in light mode. |
+
+## Summary
+
+- **18 of 42 suggestions implemented** (S1, S7, S10, S11, S12, S14, S17, S19, S21, S22, S24–S30).
+- **24 of 42 suggestions remain open** (S2–S6, S8–S9, S13, S15–S16, S18, S20, S23, S31–S42).

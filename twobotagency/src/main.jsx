@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ContentProvider } from "./context/ContentContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 
 import Final from "./Components/Final.jsx";
@@ -30,9 +31,11 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     
-      <ContentProvider>
-        <RouterProvider router={router} />
-      </ContentProvider>
+      <ThemeProvider>
+        <ContentProvider>
+          <RouterProvider router={router} />
+        </ContentProvider>
+      </ThemeProvider>
     
   </StrictMode>
 );

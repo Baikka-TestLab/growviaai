@@ -52,12 +52,12 @@ const FAQSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
               viewport={{ once: true }}
-              className="group rounded-3xl border border-white/10 bg-white/5
+              className="group rounded-3xl border border-card bg-card
               backdrop-blur-xl p-7 md:p-8 transition-all duration-300
-              hover:border-brand-purple/30 hover:bg-white/[0.07]
+              hover:border-brand-purple/30 hover:bg-[var(--card-hover-bg)]
               hover:-translate-y-1"
             >
-              <h3 className="text-lg md:text-xl text-foreground font-display font-semibold mb-4 leading-snug group-hover:text-white transition-colors">
+              <h3 className="text-lg md:text-xl text-foreground font-display font-semibold mb-4 leading-snug group-hover:text-foreground transition-colors">
                 {faq.q}
               </h3>
 

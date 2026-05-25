@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { CheckCircle, Mail, MapPin } from "lucide-react";
-import { getContactData } from "../services/contactService";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const N8N_URL = import.meta.env.VITE_N8N_WEBHOOK_URL;
 
 const ContactPage = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -11,15 +10,12 @@ const ContactPage = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    const fetchData = async () => {
-      try {
-        const data = await getContactData();
-        setPageData(data);
-      } catch {
-        // keep defaults
-      }
-    };
-    fetchData();
+    fetch(`${import.meta.env.VITE_API_URL}/api/contact`)
+      .then((r) => r.json())
+      .then((res) => {
+        if (res.success) setPageData(res.data);
+      })
+      .catch(() => {});
   }, []);
 
   const [form, setForm] = useState({
@@ -56,7 +52,7 @@ const ContactPage = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(`${API_URL}/api/contact`, {
+      const res = await fetch(N8N_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -69,8 +65,7 @@ const ContactPage = () => {
         }),
       });
 
-      const data = await res.json();
-      if (!data.success) throw new Error(data.message);
+      if (!res.ok) throw new Error("Failed to send message");
 
       setSubmitted(true);
     } catch (error) {
@@ -88,7 +83,7 @@ const ContactPage = () => {
   const services = pageData?.services ?? ["AI Booking", "AI Voice Agent", "Both"];
   const whyUs = pageData?.whyUs ?? ["Free AI audit", "Live demo", "Save time & money", "No pressure"];
   const contactInfo = pageData?.contactInfo ?? { email: "admin@growviaaii.com", location: "Remote" };
-  const heading = pageData?.heading ?? "Let's Talk Automation";
+  const heading = pageData?.heading ?? "Let's Talk";
   const subheading = pageData?.subheading ?? "Tell us about your business and we'll help automate it.";
 
   return (
@@ -183,7 +178,7 @@ const ContactPage = () => {
                     className="w-full input"
                     rows={4}
                   />
-                  <button className="w-full btn-gradient py-3" disabled={loading}>
+                  <button className="w-full btn-gradient py-3 cursor-pointer" disabled={loading}>
                     {loading ? "Sending..." : "Send Message"}
                   </button>
                 </form>

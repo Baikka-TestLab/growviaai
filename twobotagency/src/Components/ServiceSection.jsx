@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { CheckCircle } from "lucide-react";
+import { useContent } from "../context/ContentContext";
 import { getIcon } from "../utils/iconMap";
-import { getServicesData } from "../services/servicesService";
 
 const DEFAULT_SERVICES = [
   {
@@ -38,19 +37,8 @@ const DEFAULT_SERVICES = [
 ];
 
 const ServicesSection = () => {
-  const [services, setServices] = useState(DEFAULT_SERVICES);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getServicesData();
-        setServices(data);
-      } catch {
-        // keep defaults
-      }
-    };
-    fetchData();
-  }, []);
+  const content = useContent();
+  const services = content?.services ?? DEFAULT_SERVICES;
 
   return (
     <section id="services" className="py-20 bg-brand-navy text-foreground">

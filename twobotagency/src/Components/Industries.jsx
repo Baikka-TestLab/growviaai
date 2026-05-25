@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
 import { motion } from "motion/react";
+import { useContent } from "../context/ContentContext";
 import { getIcon } from "../utils/iconMap";
-import { getIndustriesData } from "../services/industriesService";
 
 const DEFAULT_INDUSTRIES = [
   { icon: "Activity", label: "Dentist" },
@@ -19,19 +18,8 @@ const DEFAULT_INDUSTRIES = [
 ];
 
 const IndustriesSection = () => {
-  const [industries, setIndustries] = useState(DEFAULT_INDUSTRIES);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getIndustriesData();
-        setIndustries(data);
-      } catch {
-        // keep defaults
-      }
-    };
-    fetchData();
-  }, []);
+  const content = useContent();
+  const industries = content?.industries ?? DEFAULT_INDUSTRIES;
 
   return (
     <section id="industries" className="section-padding bg-brand-navy relative">
@@ -62,7 +50,7 @@ const IndustriesSection = () => {
                 <Icon size={32} className="text-brand-purple" />
                 <span className="font-body font-medium text-foreground text-sm">{ind.label}</span>
                 {ind.comingSoon && (
-                  <span className="absolute top-3 right-3 text-[10px] font-mono gradient-bg text-foreground px-2 py-0.5 rounded-full">
+                  <span className="absolute top-3 right-3 text-[10px] font-mono bg-brand-navy-light text-foreground px-2 py-0.5 rounded-full">
                     Soon
                   </span>
                 )}

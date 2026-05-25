@@ -1,7 +1,158 @@
 @import "tailwindcss";
-@plugin "daisyui"
+@plugin "daisyui";
 
+@theme {
+  --color-brand-navy: #0B0D1A;
+  --color-brand-navy-light: #111827;
+  --color-brand-purple: #FFFFFF;
+  --color-brand-magenta: #9CA3AF;
+  --color-foreground: #FFFFFF;
+  --color-brand-muted: #9CA3AF;
+  --color-background: #0B0D1A;
+  --color-muted-foreground: #6B7280;
+  --font-display: "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
 
+[data-theme="light"] {
+  --color-brand-navy: #FFFFFF;
+  --color-brand-navy-light: #F3F4F6;
+  --color-brand-purple: #1F2937;
+  --color-brand-magenta: #6B7280;
+  --color-foreground: #111827;
+  --color-brand-muted: #6B7280;
+  --color-background: #FFFFFF;
+  --color-muted-foreground: #9CA3AF;
+}
 
+[data-theme="light"] .btn-gradient {
+  background: linear-gradient(135deg, #1F2937, #4B5563);
+  color: #FFFFFF;
+}
 
+[data-theme="light"] .dot-grid {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.12) 1px, transparent 1px);
+}
 
+[data-theme="light"] .card-dark {
+  background: #F9FAFB;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .btn-ghost {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .btn-ghost:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+:root {
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-hover-bg: rgba(255, 255, 255, 0.07);
+  --glow-color: 255, 255, 255;
+}
+
+[data-theme="light"] {
+  --card-bg: rgba(0, 0, 0, 0.04);
+  --card-border: rgba(0, 0, 0, 0.12);
+  --card-hover-bg: rgba(0, 0, 0, 0.07);
+  --glow-color: 0, 0, 0;
+}
+
+@layer utilities {
+  .bg-card {
+    background: var(--card-bg);
+  }
+  .border-card {
+    border-color: var(--card-border);
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-magenta));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-magenta));
+  }
+
+  .btn-gradient {
+    background: linear-gradient(135deg, #FFFFFF, #E5E7EB);
+    color: var(--color-brand-navy);
+    border: none;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+  }
+
+  .btn-gradient:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-foreground);
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+
+  .btn-ghost:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .card-dark {
+    background: var(--color-brand-navy);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    transition: all 0.3s;
+  }
+
+  .card-dark:hover {
+    border-color: var(--color-brand-purple);
+    transform: translateY(-4px);
+  }
+
+  .section-padding {
+    padding: 5rem 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding: 6rem 2rem;
+    }
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .hero-arc {
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-arc-line {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    width: 400px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(-15deg);
+    pointer-events: none;
+  }
+}

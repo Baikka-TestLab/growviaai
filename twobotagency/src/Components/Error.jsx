@@ -46,14 +46,14 @@ const Error = () => {
         >
           <Link
             to="/"
-            className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-brand-purple to-brand-magenta text-white font-semibold shadow-lg hover:shadow-brand-purple/25 transition-all duration-300"
+            className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-white to-gray-400 text-brand-navy font-semibold shadow-lg hover:shadow-white/25 transition-all duration-300 cursor-pointer"
           >
             <Home className="w-4 h-4" />
             Back to Home
           </Link>
           <button
             onClick={() => window.history.back()}
-            className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/10 text-muted-foreground hover:text-foreground hover:border-white/20 transition-all duration-300"
+            className="flex items-center gap-2 px-6 py-3 rounded-full border border-card text-muted-foreground hover:text-foreground hover:border-brand-purple/30 transition-all duration-300 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             Go Back

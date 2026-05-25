@@ -1,43 +1,10 @@
-import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getFooterData } from "../services/footerService";
 
 const NAVBAR_HEIGHT = 64;
 
-const DEFAULT_FOOTER = {
-  brand: {
-    logo: "GrowViaAi",
-    tagline:
-      "Your Business, On Autopilot. AI-powered booking and voice calling agents for local service businesses.",
-  },
-  companyLinks: ["Services", "Industries", "Pricing", "About", "Contact"],
-  legalLinks: ["Privacy Policy", "Terms of Service"],
-  socialLinks: [
-    { name: "LinkedIn", url: "https://www.linkedin.com/company/117024444" },
-    { name: "X", url: "https://x.com" },
-    { name: "Instagram", url: "https://instagram.com" },
-    { name: "Facebook", url: "https://www.facebook.com/profile.php?id=61589721712868" },
-  ],
-  copyright: "GrowViAi",
-};
-
 const Footer = () => {
-  const [footerData, setFooterData] = useState(DEFAULT_FOOTER);
-
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getFooterData();
-        setFooterData(data);
-      } catch {
-        // keep defaults
-      }
-    };
-    fetchData();
-  }, []);
 
   const scrollToId = (id) => {
     const el = document.getElementById(id);
@@ -63,8 +30,6 @@ const Footer = () => {
     }
   };
 
-  const { brand, companyLinks, legalLinks, socialLinks, copyright } = footerData;
-
   return (
     <footer className="bg-brand-navy border-t border-brand-purple/10 py-16 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
@@ -72,10 +37,10 @@ const Footer = () => {
 
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <span className="font-display font-bold text-2xl gradient-text">{brand.logo}</span>
+              <span className="font-display font-bold text-2xl gradient-text">GrowViaAi</span>
             </div>
             <p className="text-brand-muted font-body max-w-sm">
-              {brand.tagline}
+              Your Business, On Autopilot. AI-powered booking and voice calling agents for local service businesses.
             </p>
           </div>
 
@@ -84,11 +49,11 @@ const Footer = () => {
               Company
             </h4>
             <div className="flex flex-col gap-2">
-              {companyLinks.map((l) => (
+              {["Services", "Industries", "Pricing", "About", "Contact"].map((l) => (
                 <button
                   key={l}
                   onClick={() => handleLink(l)}
-                  className="text-brand-muted hover:text-foreground transition-colors text-sm font-body text-left"
+                  className="text-brand-muted hover:text-foreground transition-colors text-sm font-body text-left cursor-pointer"
                 >
                   {l}
                 </button>
@@ -101,17 +66,25 @@ const Footer = () => {
               Legal
             </h4>
             <div className="flex flex-col gap-2">
-              {legalLinks.map((l) => (
-                <span key={l} className="text-brand-muted text-sm font-body">{l}</span>
-              ))}
+              <button className="text-brand-muted text-sm font-body text-left cursor-pointer hover:text-foreground transition-colors">
+                Privacy Policy
+              </button>
+              <button className="text-brand-muted text-sm font-body text-left cursor-pointer hover:text-foreground transition-colors">
+                Terms of Service
+              </button>
             </div>
           </div>
         </div>
 
         <div className="border-t border-brand-purple/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-brand-muted text-sm font-body">&copy; {new Date().getFullYear()} {copyright}. All rights reserved.</p>
+          <p className="text-brand-muted text-sm font-body">&copy; {new Date().getFullYear()} GrowViaAi. All rights reserved.</p>
           <div className="flex gap-4">
-            {socialLinks.map((s) => (
+            {[
+              { name: "LinkedIn", url: "https://www.linkedin.com/company/117024444" },
+              { name: "X", url: "https://x.com" },
+              { name: "Instagram", url: "https://instagram.com" },
+              { name: "Facebook", url: "https://www.facebook.com/profile.php?id=61589721712868" },
+            ].map((s) => (
               <a
                 key={s.name}
                 href={s.url}

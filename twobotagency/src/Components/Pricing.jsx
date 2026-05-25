@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { getPricingData } from "../services/pricingService";
+import { useContent } from "../context/ContentContext";
 
 const DEFAULT_PLANS = [
   {
@@ -26,19 +25,8 @@ const DEFAULT_PLANS = [
 ];
 
 const PricingSection = () => {
-  const [plans, setPlans] = useState(DEFAULT_PLANS);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getPricingData();
-        setPlans(data);
-      } catch {
-        // keep defaults
-      }
-    };
-    fetchData();
-  }, []);
+  const content = useContent();
+  const plans = content?.pricing ?? DEFAULT_PLANS;
 
   return (
     <section
@@ -82,13 +70,13 @@ const PricingSection = () => {
               transition-all duration-300 hover:-translate-y-2
               ${
                 plan.popular
-                  ? "bg-brand-purple/10 border-brand-purple/40 shadow-[0_0_40px_rgba(123,47,255,0.25)] scale-105"
-                  : "bg-white/5 border-white/10 hover:border-brand-purple/30"
+                  ? "bg-brand-purple/10 border-brand-purple/40 shadow-[0_0_40px_rgba(var(--glow-color),0.12)] scale-105"
+                  : "bg-card border border-card hover:border-brand-purple/30"
               }`}
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="gradient-bg text-white text-xs font-semibold tracking-wide px-5 py-2 rounded-full shadow-lg">
+                  <span className="bg-white text-gray-900 text-xs font-semibold tracking-wide px-5 py-2 rounded-full shadow-lg">
                     MOST POPULAR
                   </span>
                 </div>
@@ -121,11 +109,11 @@ const PricingSection = () => {
 
               <Link
                 to="/contact"
-                className={`w-full text-center py-4 rounded-2xl font-semibold transition-all duration-300
+                className={`w-full text-center py-4 rounded-2xl font-semibold transition-all duration-300 cursor-pointer
                 ${
                   plan.popular
-                    ? "btn-gradient text-white shadow-lg hover:scale-[1.02]"
-                    : "bg-white/5 border border-white/10 text-foreground hover:border-brand-purple/40 hover:bg-white/10"
+                    ? "btn-gradient shadow-lg hover:scale-[1.02]"
+                    : "bg-card border border-card text-foreground hover:border-brand-purple/40 hover:bg-card"
                 }`}
               >
                 Book a Free Demo
